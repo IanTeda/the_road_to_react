@@ -38,7 +38,7 @@ const list = [
   },
 ];
 
-function App() {
+const App = () => {
   return (
     <div>
       <h1>{welcome.greeting} {welcome.title}</h1>
@@ -56,10 +56,10 @@ function App() {
   );
 }
 
-function List() {
+const List = () => {
   return (
     <ul>
-      {list.map(function (item) {
+      {list.map((item) => {
         return (
           <li key={item.objectID}>
             <span>
@@ -75,11 +75,21 @@ function List() {
   )
 }
 
-function Search() {
+const Search = () => {
+  // Perform task here
+
+  const handleChange = (event) => {
+    // Synthetic event
+    console.log(event)
+
+    // Value of target (here input HTML element)
+    console.log(event.target.value)
+  }
+
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+      <input id="search" type="text" onChange={handleChange}/>
     </div>
   )
 }

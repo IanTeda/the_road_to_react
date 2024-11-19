@@ -10,5 +10,6 @@
 - In native HTML submitting a form triggers a page refresh. However, in React this page refresh should be prevented, because the developer should take care about what happens next.
 - Always pass functions to these JSX event handlers, not the return value of the function.
 - Props passed down should be treated as immutable data structure and not changed within the function component it is passed to.
-- React state introduces a mutable data structure, i.e. stateful values
+- React state introduces a mutable data structure, i.e. stateful values.
 - When a state gets mutated, the component with the state and all child components will re-render.
+- When an (event) handler is passed as props from a parent component to its child component, it becomes a callback handler.

@@ -14,4 +14,5 @@
 - When a state gets mutated, the component with the state and all child components will re-render.
 - When an (event) handler is passed as props from a parent component to its child component, it becomes a callback handler.
 - React props are always passed down the component tree and therefore functions that are passed down as callback handlers in props can be used to communicate up the component tree.
-- Knowing where to instantiate state in React is important. State should always be there where all components which depend on the state can read (via props) and update (via callback handler) it
+- Knowing where to instantiate state in React is important. State should always be there where all components which depend on the state can read (via props) and update (via callback handler) it.
+- HTML elements do not know the React state, so we need to sync the two by using the HTML `value` tag.

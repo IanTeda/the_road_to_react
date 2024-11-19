@@ -9,3 +9,4 @@
 - React’s synthetic event is essentially a wrapper around the browser’s native event.
 - In native HTML submitting a form triggers a page refresh. However, in React this page refresh should be prevented, because the developer should take care about what happens next.
 - Always pass functions to these JSX event handlers, not the return value of the function.
+- Props passed down should be treated as immutable data structure and not changed within the function component it is passed to.

@@ -49,7 +49,7 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
-  const searchedStores = stories.filter((story) => 
+  const searchedStores = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLocaleLowerCase())
   );
 
@@ -66,33 +66,41 @@ const App = () => {
   );
 }
 
-const Search = (props) => (
+const Search = ({ search, onSearch, searchTerm }) => (
   <div>
     <label htmlFor="search">Search: </label>
-    <input id="search" type="text" value={props.search} onChange={props.onSearch} />
+    <input id="search" type="text" value={search} onChange={onSearch} />
 
     <p>
-      Searching for <strong>{props.searchTerm}</strong>
+      Searching for <strong>{searchTerm}</strong>
     </p>
   </div>
 )
 
-const List = (props) => (
+const List = ({ list }) => (
   <ul>
-    {props.list.map((item) => (
+    {list.map((item) => (
       <Item key={item.objectID} item={item} />
     ))}
   </ul>
 );
 
-const Item = (props) => (
+const Item = ({
+  item: {
+    title,
+    url,
+    author,
+    num_comments,
+    points,
+  }
+}) => (
   <li>
     <span>
-      <a href="{props.item.url}">{props.item.title}</a>
+      <a href="{url}">{title}</a>
     </span>
-    <span>{props.item.author}</span>
-    <span>{props.item.num_comments}</span>
-    <span>{props.item.points}</span>
+    <span>{author}</span>
+    <span>{num_comments}</span>
+    <span>{points}</span>
   </li>
 );
 

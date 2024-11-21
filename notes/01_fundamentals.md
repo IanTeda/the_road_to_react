@@ -16,3 +16,7 @@
 - React props are always passed down the component tree and therefore functions that are passed down as callback handlers in props can be used to communicate up the component tree.
 - Knowing where to instantiate state in React is important. State should always be there where all components which depend on the state can read (via props) and update (via callback handler) it.
 - HTML elements do not know the React state, so we need to sync the two by using the HTML `value` tag.
+- Almost always use object destructuring for props in a function component’s function signature, because props are rarely used themselves.
+- Use the spread operator when you want to pass all key/value pairs of an object to a child component in JSX.
+- Use the rest operator when you only want to split out certain properties from your props object.
+- Use nested destructuring only when it improves readability.

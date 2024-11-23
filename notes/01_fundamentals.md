@@ -20,3 +20,4 @@
 - Use the spread operator when you want to pass all key/value pairs of an object to a child component in JSX.
 - Use the rest operator when you only want to split out certain properties from your props object.
 - Use nested destructuring only when it improves readability.
+- useEffect is a hook in React that allows function components to perform side effects

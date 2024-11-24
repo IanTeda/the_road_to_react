@@ -1,5 +1,7 @@
 # Meet the React Component
 
+- [Github the-road-to-learn-react/hacker-stories](https://github.com/the-road-to-learn-react/hacker-stories)
+- [The Road to React - Book Website](https://www.roadtoreact.com/)
 - Create Vite React project with typescript `npm create vite@latest hacker_stories_typescript -- --template react-ts`
 - As a rule of thumb: If a variable does not need anything from within the function component’s body (e.g. parameters), then define it outside of the component which avoids re-defining it on every function call.
 - Since JSX is closer to JavaScript than to HTML, React uses the camelCase naming convention. Which HTML does not.

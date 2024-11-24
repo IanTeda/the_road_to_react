@@ -14,7 +14,7 @@ const useStorageState = (key, initialState) => {
     localStorage.setItem(key, value);
   }, [value]);
 
-  return [value, key]
+  return [value, setValue]
 }
 
 const App = () => {
@@ -54,10 +54,9 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
+  const [searchTerm, setSearchTerm] = useStorageState('search2', 'React');
 
   const handleSearch = (event) => {
-    // console.log(event.target.value)
     setSearchTerm(event.target.value)
   }
 

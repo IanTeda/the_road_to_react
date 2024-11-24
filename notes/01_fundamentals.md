@@ -21,5 +21,5 @@
 - Use the rest operator when you only want to split out certain properties from your props object.
 - Use nested destructuring only when it improves readability.
 - useEffect is a hook in React that allows function components to perform side effects
-- Use a custom key for local storage, this key can be shared across the app if using
-the same key
+- Use a custom key for local storage, this key can be shared across the app if using the same key
+- Custom hooks are JavaScript functions that utilise React hooks to encapsulate and reuse logic in function components.

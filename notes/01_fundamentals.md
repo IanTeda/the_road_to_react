@@ -25,4 +25,7 @@
 - useEffect is a hook in React that allows function components to perform side effects
 - Use a custom key for local storage, this key can be shared across the app if using the same key
 - Custom hooks are JavaScript functions that utilise React hooks to encapsulate and reuse logic in function components.
-- `<React.Fragment>...</React.Fragment>` can be used to avoid a wrapping html tag. It's shorthand style is `<>...</>`
+- `<React.Fragment>...</React.Fragment>` can be used to avoid a wrapping html tag. It's shorthand style is `<>...</>`.
+- A Fragment is a way to group multiple React elements without introducing an additional DOM element.
+- Default props value can be set by equating the props parameter in the const signature.
+- A reusable component can have internal state by using a hook like useState.

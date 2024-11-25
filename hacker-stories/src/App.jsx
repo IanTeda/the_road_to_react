@@ -66,9 +66,16 @@ const App = () => {
 
   return (
     <div>
-      <h1>{welcome.greeting} {welcome.title}</h1>
+      <h1>My Hacker Stories</h1>
+      <h2>{welcome.greeting} {welcome.title}</h2>
 
-      <Search search={searchTerm} onSearch={handleSearch} />
+      {/* <Search search={searchTerm} onSearch={handleSearch} /> */}
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value={searchTerm}
+        onInputChange={handleSearch}
+      />
 
       <hr />
 
@@ -76,6 +83,25 @@ const App = () => {
     </div>
   );
 }
+
+const InputWithLabel = ({
+  id,
+  label,
+  value,
+  type="text",
+  onInputChange
+}) => (
+  <>
+    <label htmlFor='{id}'>{label}</label>
+    &nbsp;
+    <input
+      id={id}
+      type={type}
+      value={value}
+      onChange={onInputChange}
+    />
+  </>
+)
 
 const Search = ({ search, onSearch, searchTerm }) => (
   <React.Fragment>
@@ -90,7 +116,7 @@ const Search = ({ search, onSearch, searchTerm }) => (
 
 const List = ({ list }) => (
   <ul>
-    {list.map(({objectID, ...item}) => (
+    {list.map(({ objectID, ...item }) => (
       <Item
         key={objectID}
         {...item}

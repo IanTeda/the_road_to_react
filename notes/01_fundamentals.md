@@ -34,3 +34,6 @@
 - “Children” in React refers to the content placed between the opening and closing tags of a component.
 - React uses a declarative programming approach. Instead of manually manipulating the Document Object Model (DOM) for UI updates, developers declare the desired UI state, and React manages the rendering process.
 - useRef is a hook in React that provides a mutable object called a ref, which can hold a mutable value and persists across renders
+- Using JavaScript’s bind method on a function allows us to bind arguments directly to that function that should be used when executing it.
+- Inline handlers can be more difficult to debug because JavaScript logic may be hidden in JSX.
+- If inline handlers need to use a block body, because there are more than one line of code executed, it’s about time to extract them as normal event handlers.

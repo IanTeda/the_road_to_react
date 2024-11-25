@@ -78,14 +78,14 @@ const App = () => {
 }
 
 const Search = ({ search, onSearch, searchTerm }) => (
-  <div>
+  <React.Fragment>
     <label htmlFor="search">Search: </label>
     <input id="search" type="text" value={search} onChange={onSearch} />
 
     <p>
       Searching for <strong>{searchTerm}</strong>
     </p>
-  </div>
+  </React.Fragment>
 )
 
 const List = ({ list }) => (

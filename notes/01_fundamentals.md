@@ -25,3 +25,4 @@
 - useEffect is a hook in React that allows function components to perform side effects
 - Use a custom key for local storage, this key can be shared across the app if using the same key
 - Custom hooks are JavaScript functions that utilise React hooks to encapsulate and reuse logic in function components.
+- `<React.Fragment>...</React.Fragment>` can be used to avoid a wrapping html tag. It's shorthand style is `<>...</>`

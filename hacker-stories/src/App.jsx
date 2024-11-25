@@ -5,6 +5,41 @@ const welcome = {
   title: 'React',
 };
 
+const initialStories = [
+  {
+    title: 'React',
+    url: 'https://reactjs.org/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+  {
+    title: 'BBob',
+    url: 'https://billybob.org/',
+    author: 'Billy Bob',
+    num_comments: 9,
+    points: 2,
+    objectID: 2,
+  },
+  {
+    title: 'Awesome',
+    url: 'https://superawesome.org/',
+    author: 'Super Awesome',
+    num_comments: 34,
+    points: 9,
+    objectID: 3,
+  },
+];
+
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
@@ -19,45 +54,24 @@ const useStorageState = (key, initialState) => {
 
 const App = () => {
 
-  const stories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    },
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    },
-    {
-      title: 'BBob',
-      url: 'https://billybob.org/',
-      author: 'Billy Bob',
-      num_comments: 9,
-      points: 2,
-      objectID: 2,
-    },
-    {
-      title: 'Awesome',
-      url: 'https://superawesome.org/',
-      author: 'Super Awesome',
-      num_comments: 34,
-      points: 9,
-      objectID: 3,
-    },
-  ];
-
+  // Set search term state
   const [searchTerm, setSearchTerm] = useStorageState('search2', 'React');
 
+  // Set story state
+  const [stories, setStories] = React.useState(initialStories);
+
+  // Callback handler
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
+  }
+
+  // Callback handler
+  const handleRemoveStory = (item) => {
+    const newStories = stories.filter(
+      (story) => item.objectID !== story.objectID
+    );
+
+    setStories(newStories);
   }
 
   const searchedStores = stories.filter((story) =>
@@ -81,7 +95,7 @@ const App = () => {
 
       <hr />
 
-      <List list={searchedStores} />
+      <List list={searchedStores} onRemoveItem={handleRemoveStory} />
     </div>
   );
 }
@@ -117,32 +131,40 @@ const InputWithLabel = ({
   )
 }
 
-const List = ({ list }) => (
+const List = ({ list, onRemoveItem }) => (
   <ul>
-    {list.map(({ objectID, ...item }) => (
+    {list.map((item) => (
       <Item
-        key={objectID}
-        {...item}
+        key={item.objectID}
+        item={item}
+        onRemoveItem={onRemoveItem}
       />
     ))}
   </ul>
 );
 
-const Item = ({
-  title,
-  url,
-  author,
-  num_comments,
-  points,
-}) => (
-  <li>
-    <span>
-      <a href="{url}">{title}</a>
-    </span>
-    <span>{author}</span>
-    <span>{num_comments}</span>
-    <span>{points}</span>
-  </li>
-);
+const Item = ({ item, onRemoveItem }) => {
+  
+  // Component callback handler
+  const handleRemoveItem = () => {
+    onRemoveItem(item)
+  }
+
+  return (
+    <li>
+      <span>
+        <a href="{item.url}">{item.title}</a>
+      </span>
+      <span>{item.author}</span>
+      <span>{item.num_comments}</span>
+      <span>{item.points}</span>
+      <span>
+        <button type="button" onClick={handleRemoveItem}>
+          Remove
+        </button>
+      </span>
+    </li>
+  )
+};
 
 export default App

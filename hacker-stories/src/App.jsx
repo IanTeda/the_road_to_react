@@ -69,11 +69,11 @@ const App = () => {
       <h1>My Hacker Stories</h1>
       <h2>{welcome.greeting} {welcome.title}</h2>
 
-      {/* <Search search={searchTerm} onSearch={handleSearch} /> */}
       <InputWithLabel
         id="search"
         label="Search"
         value={searchTerm}
+        isFocused
         onInputChange={handleSearch}
       >
         <strong>Search List:</strong>
@@ -91,6 +91,7 @@ const InputWithLabel = ({
   value,
   type="text",
   onInputChange,
+  isFocused,
   children
 }) => (
   <>
@@ -100,20 +101,10 @@ const InputWithLabel = ({
       id={id}
       type={type}
       value={value}
+      autoFocus={isFocused}
       onChange={onInputChange}
     />
   </>
-)
-
-const Search = ({ search, onSearch, searchTerm }) => (
-  <React.Fragment>
-    <label htmlFor="search">Search: </label>
-    <input id="search" type="text" value={search} onChange={onSearch} />
-
-    <p>
-      Searching for <strong>{searchTerm}</strong>
-    </p>
-  </React.Fragment>
 )
 
 const List = ({ list }) => (

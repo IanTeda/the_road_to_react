@@ -32,3 +32,4 @@
 - Essentially a React application is a bunch of React components arranged in the shape of a tree.
 - Everything that’s passed between a component’s elements can be accessed as children in the component meaning you can pass in other html elements, providing more  flexibility with the component.
 - “Children” in React refers to the content placed between the opening and closing tags of a component.
+- React uses a declarative programming approach. Instead of manually manipulating the Document Object Model (DOM) for UI updates, developers declare the desired UI state, and React manages the rendering process.

@@ -69,10 +69,20 @@ const App = () => {
   // Set story state. Initiate empty to simulate async data fetch
   const [stories, setStories] = React.useState([]);
 
+  // Maintain application loading state
+  const [isLoading, setIsLoading] = React.useState(false)
+
   // Simulate an async data fetch
   React.useEffect(() => {
+    // Update loading state
+    setIsLoading(true);
+
+    // Fetch async data
     getAsyncStories().then((result) => {
       setStories(result.data.stories)
+
+      // Data has been fetch so set state false
+      setIsLoading(false)
     });
   }, []);
 
@@ -110,8 +120,12 @@ const App = () => {
       </InputWithLabel>
 
       <hr />
-
-      <List list={searchedStores} onRemoveItem={handleRemoveStory} />
+      { isLoading ? (
+        <p>Loading...</p>
+      ) : (
+          <List list={searchedStores} onRemoveItem={handleRemoveStory} />
+      )}
+      
     </div>
   );
 }

@@ -39,3 +39,6 @@
 - If inline handlers need to use a block body, because there are more than one line of code executed, it’s about time to extract them as normal event handlers.
 - Components are often rendered before initiating data fetching, and conditional rendering or placeholder content is used until the data arrives.
 - useState allows components to manage state changes, including loading states and the updated data received asynchronously.
+- In JavaScript, a true && 'Hello World' always evaluates to ‘Hello World’. A false && 'Hello World'always evaluates to false.
+- Using expression && JSX is more concise than using expression ? JSX : null.
+- Hooks must be used at the top level of a function component, not within conditions or loops.

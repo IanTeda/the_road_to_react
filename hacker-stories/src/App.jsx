@@ -72,6 +72,9 @@ const App = () => {
   // Maintain application loading state
   const [isLoading, setIsLoading] = React.useState(false)
 
+  // Error state handling
+  const [isError, setIsError] = React.useState(false)
+
   // Simulate an async data fetch
   React.useEffect(() => {
     // Update loading state
@@ -83,7 +86,8 @@ const App = () => {
 
       // Data has been fetch so set state false
       setIsLoading(false)
-    });
+    })
+      .catch(() => setIsError(true));
   }, []);
 
   // Callback handler
@@ -120,6 +124,9 @@ const App = () => {
       </InputWithLabel>
 
       <hr />
+
+      {isError && <p>Ops, something went wrong ...</p>}
+
       { isLoading ? (
         <p>Loading...</p>
       ) : (

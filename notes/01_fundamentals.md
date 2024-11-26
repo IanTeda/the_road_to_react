@@ -1,4 +1,4 @@
-# Meet the React Component
+# The Road to React
 
 - [Github the-road-to-learn-react/hacker-stories](https://github.com/the-road-to-learn-react/hacker-stories)
 - [The Road to React - Book Website](https://www.roadtoreact.com/)
@@ -37,3 +37,5 @@
 - Using JavaScript’s bind method on a function allows us to bind arguments directly to that function that should be used when executing it.
 - Inline handlers can be more difficult to debug because JavaScript logic may be hidden in JSX.
 - If inline handlers need to use a block body, because there are more than one line of code executed, it’s about time to extract them as normal event handlers.
+- Components are often rendered before initiating data fetching, and conditional rendering or placeholder content is used until the data arrives.
+- useState allows components to manage state changes, including loading states and the updated data received asynchronously.

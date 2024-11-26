@@ -40,6 +40,15 @@ const initialStories = [
   },
 ];
 
+const getAsyncStories = () => 
+  new Promise((resolve) =>
+    setTimeout(
+      () => resolve({ data: { stories: initialStories } }),
+      // Two second delay to simulate data fetch
+      2000
+    )
+  );
+
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
@@ -57,8 +66,15 @@ const App = () => {
   // Set search term state
   const [searchTerm, setSearchTerm] = useStorageState('search2', 'React');
 
-  // Set story state
-  const [stories, setStories] = React.useState(initialStories);
+  // Set story state. Initiate empty to simulate async data fetch
+  const [stories, setStories] = React.useState([]);
+
+  // Simulate an async data fetch
+  React.useEffect(() => {
+    getAsyncStories().then((result) => {
+      setStories(result.data.stories)
+    });
+  }, []);
 
   // Callback handler
   const handleSearch = (event) => {
@@ -144,7 +160,7 @@ const List = ({ list, onRemoveItem }) => (
 );
 
 const Item = ({ item, onRemoveItem }) => {
-  
+
   // Component callback handler
   const handleRemoveItem = () => {
     onRemoveItem(item)

@@ -49,6 +49,29 @@ const getAsyncStories = () =>
     )
   );
 
+const storiesReducer = (state, action) => {
+  // if (action.type === 'SET_STORIES') {
+  //   return action.payload;
+  // } else if (action.type === 'REMOVE_STORY') {
+  //   return state.filter(
+  //     (story) => action.payload.objectID !== story.objectID
+  //   );
+  // } else {
+  //   throw new Error();
+    
+  // }
+  switch (action.type) {
+    case 'SET_STORIES':
+      return action.payload
+    case 'REMOVE_STORY':
+      return state.filter(
+        (story) => action.payload.objectID !== story.objectID
+      )
+    default:
+      throw new Error();
+  }
+}
+
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
@@ -64,16 +87,22 @@ const useStorageState = (key, initialState) => {
 const App = () => {
 
   // Set search term state
-  const [searchTerm, setSearchTerm] = useStorageState('search2', 'React');
+  const [searchTerm, setSearchTerm] = useStorageState(
+    'search2',
+    'React'
+  );
 
   // Set story state. Initiate empty to simulate async data fetch
-  const [stories, setStories] = React.useState([]);
+  const [stories, dispatchStories] = React.useReducer(
+    storiesReducer,
+    []
+  );
 
   // Maintain application loading state
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false);
 
   // Error state handling
-  const [isError, setIsError] = React.useState(false)
+  const [isError, setIsError] = React.useState(false);
 
   // Simulate an async data fetch
   React.useEffect(() => {
@@ -82,7 +111,11 @@ const App = () => {
 
     // Fetch async data
     getAsyncStories().then((result) => {
-      setStories(result.data.stories)
+      // setStories(result.data.stories)
+      dispatchStories({
+        type: "SET_STORIES",
+        payload: result.data.stories,
+      });
 
       // Data has been fetch so set state false
       setIsLoading(false)
@@ -91,18 +124,27 @@ const App = () => {
   }, []);
 
   // Callback handler
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value)
-  }
+  const handleRemoveStory = (item) => {
+    // const newStories = stories.filter(
+    //   // (story) => item.objectID !== story.objectID
+    //   dispatchStories({
+    //     type: 'REMOVE_STORY',
+    //     payload: item,
+    //   })
+    // );
+
+    // setStories(newStories);
+
+    dispatchStories({
+      type: "REMOVE_STORY",
+      payload: item
+    })
+  };
 
   // Callback handler
-  const handleRemoveStory = (item) => {
-    const newStories = stories.filter(
-      (story) => item.objectID !== story.objectID
-    );
-
-    setStories(newStories);
-  }
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value)
+  };
 
   const searchedStores = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLocaleLowerCase())

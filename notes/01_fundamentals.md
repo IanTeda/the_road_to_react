@@ -42,3 +42,5 @@
 - In JavaScript, a true && 'Hello World' always evaluates to ‘Hello World’. A false && 'Hello World'always evaluates to false.
 - Using expression && JSX is more concise than using expression ? JSX : null.
 - Hooks must be used at the top level of a function component, not within conditions or loops.
+- A reducer action is always associated with a type and as a best practice with a payload, similar to actions in Ratatui.
+- A reducer function is responsible for specifying how the state should change in response to dispatched actions, based on the current state and the action.

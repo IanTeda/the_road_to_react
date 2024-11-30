@@ -1,53 +1,55 @@
 import * as React from 'react';
 
+const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
+
 const welcome = {
   greeting: 'Hey',
   title: 'React',
 };
 
-const initialStories = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-  {
-    title: 'BBob',
-    url: 'https://billybob.org/',
-    author: 'Billy Bob',
-    num_comments: 9,
-    points: 2,
-    objectID: 2,
-  },
-  {
-    title: 'Awesome',
-    url: 'https://superawesome.org/',
-    author: 'Super Awesome',
-    num_comments: 34,
-    points: 9,
-    objectID: 3,
-  },
-];
+// const initialStories = [
+//   {
+//     title: 'React',
+//     url: 'https://reactjs.org/',
+//     author: 'Jordan Walke',
+//     num_comments: 3,
+//     points: 4,
+//     objectID: 0,
+//   },
+//   {
+//     title: 'Redux',
+//     url: 'https://redux.js.org/',
+//     author: 'Dan Abramov, Andrew Clark',
+//     num_comments: 2,
+//     points: 5,
+//     objectID: 1,
+//   },
+//   {
+//     title: 'BBob',
+//     url: 'https://billybob.org/',
+//     author: 'Billy Bob',
+//     num_comments: 9,
+//     points: 2,
+//     objectID: 2,
+//   },
+//   {
+//     title: 'Awesome',
+//     url: 'https://superawesome.org/',
+//     author: 'Super Awesome',
+//     num_comments: 34,
+//     points: 9,
+//     objectID: 3,
+//   },
+// ];
 
-const getAsyncStories = () => 
-  new Promise((resolve) =>
-    setTimeout(
-      () => resolve({ data: { stories: initialStories } }),
-      // Two second delay to simulate data fetch
-      2000
-    )
-  );
+// const getAsyncStories = () => 
+//   new Promise((resolve) =>
+//     setTimeout(
+//       () => resolve({ data: { stories: initialStories } }),
+//       // Two second delay to simulate data fetch
+//       2000
+//     )
+//   );
 
 const storiesReducer = (state, action) => {
   switch (action.type) {
@@ -117,32 +119,22 @@ const App = () => {
     }
   );
 
-  // // Maintain application loading state
-  // const [isLoading, setIsLoading] = React.useState(false);
-
-  // // Error state handling
-  // const [isError, setIsError] = React.useState(false);
-
   // Simulate an async data fetch
   React.useEffect(() => {
     // Update loading state
-    // setIsLoading(true);
-    dispatchStories({ type: 'STORIES_FETCH_INIT' })
-
-    // Fetch async data
-    getAsyncStories().then((result) => {
-      // setStories(result.data.stories)
-      dispatchStories({
-        type: "STORIES_FETCH_SUCCESS",
-        payload: result.data.stories,
-      });
-
-      // Data has been fetch so set state false
-      setIsLoading(false)
-    })
-      .catch(() => 
-        dispatchStories({ type: 'STORIES_FETCH_FAILURE'})
-      );
+    dispatchStories({ type: 'STORIES_FETCH_INIT' });
+    
+    fetch(`${API_ENDPOINT}react`)
+      .then((response) => response.json())
+      .then((result) => {
+        dispatchStories({
+          type: "STORIES_FETCH_SUCCESS",
+          payload: result.hits,
+        });
+      })
+      .catch(() => {
+        dispatchStories({ type: "STORIES_FETCH_FAILURE"})
+      })
   }, []);
 
   // Callback handler

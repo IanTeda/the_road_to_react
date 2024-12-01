@@ -7,50 +7,6 @@ const welcome = {
   title: 'React',
 };
 
-// const initialStories = [
-//   {
-//     title: 'React',
-//     url: 'https://reactjs.org/',
-//     author: 'Jordan Walke',
-//     num_comments: 3,
-//     points: 4,
-//     objectID: 0,
-//   },
-//   {
-//     title: 'Redux',
-//     url: 'https://redux.js.org/',
-//     author: 'Dan Abramov, Andrew Clark',
-//     num_comments: 2,
-//     points: 5,
-//     objectID: 1,
-//   },
-//   {
-//     title: 'BBob',
-//     url: 'https://billybob.org/',
-//     author: 'Billy Bob',
-//     num_comments: 9,
-//     points: 2,
-//     objectID: 2,
-//   },
-//   {
-//     title: 'Awesome',
-//     url: 'https://superawesome.org/',
-//     author: 'Super Awesome',
-//     num_comments: 34,
-//     points: 9,
-//     objectID: 3,
-//   },
-// ];
-
-// const getAsyncStories = () => 
-//   new Promise((resolve) =>
-//     setTimeout(
-//       () => resolve({ data: { stories: initialStories } }),
-//       // Two second delay to simulate data fetch
-//       2000
-//     )
-//   );
-
 const storiesReducer = (state, action) => {
   switch (action.type) {
     case 'STORIES_FETCH_INIT':
@@ -120,7 +76,7 @@ const App = () => {
   );
 
   // Simulate an async data fetch
-  React.useEffect(() => {
+  const handleFetchStories = React.useCallback(() => {
     // if (searchTerm === '') return;
     if (!searchTerm) return;
 
@@ -140,6 +96,11 @@ const App = () => {
       })
   }, [searchTerm]);
 
+  React.useEffect(() => {
+    handleFetchStories();
+
+  }, [handleFetchStories]);
+  
   // Callback handler
   const handleRemoveStory = (item) => {
     dispatchStories({

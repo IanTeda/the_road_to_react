@@ -45,3 +45,4 @@
 - A reducer action is always associated with a type and as a best practice with a payload, similar to actions in Ratatui.
 - A reducer function is responsible for specifying how the state should change in response to dispatched actions, based on the current state and the action.
 - Conditional states can lead to impossible states and undesired behaviors in the UI
+- UseCallback is used to memoize functions in React, preventing unnecessary re-creations of functions on re-renders

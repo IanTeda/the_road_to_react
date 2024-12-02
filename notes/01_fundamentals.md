@@ -47,3 +47,5 @@
 - Conditional states can lead to impossible states and undesired behaviors in the UI
 - UseCallback is used to memoize functions in React, preventing unnecessary re-creations of functions on re-renders
 - Explicit data fetching keeps track of API endpoint URL string in state, only fetching when the button is pressed.
+- Async functions allow you to work with asynchronous code in a more readable and sequential manner, enhancing the handling of promises.
+- Use Promise.all() to handle multiple asynchronous operations concurrently in an async function.

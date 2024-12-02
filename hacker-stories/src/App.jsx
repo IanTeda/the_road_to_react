@@ -79,22 +79,21 @@ const App = () => {
   );
 
   // Simulate an async data fetch
-  const handleFetchStories = React.useCallback(() => {
+  const handleFetchStories = React.useCallback(async () => {
     // Update loading state
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    // Fetch api results using Axios, as fetch is not supported headless
-    // We don't need to wrap it in JSON, as the module does that for us
-    axios.get(url)
-      .then((result) => {
-        dispatchStories({
-          type: "STORIES_FETCH_SUCCESS",
-          payload: result.data.hits,
-        });
-      })
-      .catch(() => {
-        dispatchStories({ type: "STORIES_FETCH_FAILURE" })
-      })
+    try {
+      const result = await axios.get(url);
+
+      dispatchStories({
+        type: 'STORIES_FETCH_SUCCESS',
+        payload: result.data.hits
+      });
+    } catch {
+      dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
+    }
+
   }, [url]);
 
   React.useEffect(() => {

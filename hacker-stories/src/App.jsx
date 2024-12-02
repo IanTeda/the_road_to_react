@@ -33,7 +33,7 @@ const storiesReducer = (state, action) => {
     case 'REMOVE_STORY':
       // return state.filter(
       //   (story) => action.payload.objectID !== story.objectID
-    // )
+      // )
       return {
         ...state,
         data: state.data.filter(
@@ -65,6 +65,8 @@ const App = () => {
     'React'
   );
 
+  const [url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`);
+
   // Set story state. Initiate empty to simulate async data fetch
   const [stories, dispatchStories] = React.useReducer(
     storiesReducer,
@@ -77,13 +79,11 @@ const App = () => {
 
   // Simulate an async data fetch
   const handleFetchStories = React.useCallback(() => {
-    // if (searchTerm === '') return;
-    if (!searchTerm) return;
-
     // Update loading state
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
-    
-    fetch(`${API_ENDPOINT}${searchTerm}`)
+
+    // Fetch api results
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         dispatchStories({
@@ -92,15 +92,15 @@ const App = () => {
         });
       })
       .catch(() => {
-        dispatchStories({ type: "STORIES_FETCH_FAILURE"})
+        dispatchStories({ type: "STORIES_FETCH_FAILURE" })
       })
-  }, [searchTerm]);
+  }, [url]);
 
   React.useEffect(() => {
     handleFetchStories();
 
   }, [handleFetchStories]);
-  
+
   // Callback handler
   const handleRemoveStory = (item) => {
     dispatchStories({
@@ -109,14 +109,13 @@ const App = () => {
     })
   };
 
-  // Callback handler
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value)
+  const handleSearchInput = (event) => {
+    setSearchTerm(event.target.value);
   };
 
-  const searchedStores = stories.data.filter((story) =>
-    story.title.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-  );
+  const handleSearchSubmit = () => {
+    setUrl(`${API_ENDPOINT}${searchTerm}`);
+  };
 
   return (
     <div>
@@ -125,24 +124,30 @@ const App = () => {
 
       <InputWithLabel
         id="search"
-        label="Search"
         value={searchTerm}
         isFocused
-        onInputChange={handleSearch}
+        onInputChange={handleSearchInput}
       >
-        <strong>Search List:</strong>
+        <strong>Search  :</strong>
       </InputWithLabel>
+
+      <button
+        type='button'
+        disabled={!searchTerm}
+        onClick={handleSearchSubmit}>
+        Submit
+      </button>
 
       <hr />
 
       {stories.isError && <p>Ops, something went wrong ...</p>}
 
-      { stories.isLoading ? (
+      {stories.isLoading ? (
         <p>Loading...</p>
       ) : (
-          <List list={stories.data} onRemoveItem={handleRemoveStory} />
+        <List list={stories.data} onRemoveItem={handleRemoveStory} />
       )}
-      
+
     </div>
   );
 }
@@ -165,18 +170,18 @@ const InputWithLabel = ({
 
   return (
     <>
-      <label htmlFor='{id}'>{children}</label>
+      <label htmlFor={id}>{children}</label>
       &nbsp;
       <input
+        ref={inputRef}
         id={id}
         type={type}
         value={value}
-        ref={inputRef}
         onChange={onInputChange}
       />
     </>
-  )
-}
+  );
+};
 
 const List = ({ list, onRemoveItem }) => (
   <ul>
@@ -190,28 +195,20 @@ const List = ({ list, onRemoveItem }) => (
   </ul>
 );
 
-const Item = ({ item, onRemoveItem }) => {
-
-  // Component callback handler
-  const handleRemoveItem = () => {
-    onRemoveItem(item)
-  }
-
-  return (
-    <li>
-      <span>
-        <a href="{item.url}">{item.title}</a>
-      </span>
-      <span>{item.author}</span>
-      <span>{item.num_comments}</span>
-      <span>{item.points}</span>
-      <span>
-        <button type="button" onClick={() => onRemoveItem(item)}>
-          Remove
-        </button>
-      </span>
-    </li>
-  )
-};
+const Item = ({ item, onRemoveItem }) => (
+  <li>
+    <span>
+      <a href="{item.url}">{item.title}</a>
+    </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+    <span>
+      <button type="button" onClick={() => onRemoveItem(item)}>
+        Remove
+      </button>
+    </span>
+  </li>
+);
 
 export default App

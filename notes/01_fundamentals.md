@@ -46,3 +46,4 @@
 - A reducer function is responsible for specifying how the state should change in response to dispatched actions, based on the current state and the action.
 - Conditional states can lead to impossible states and undesired behaviors in the UI
 - UseCallback is used to memoize functions in React, preventing unnecessary re-creations of functions on re-renders
+- Explicit data fetching keeps track of API endpoint URL string in state, only fetching when the button is pressed.

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
@@ -82,13 +83,13 @@ const App = () => {
     // Update loading state
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    // Fetch api results
-    fetch(url)
-      .then((response) => response.json())
+    // Fetch api results using Axios, as fetch is not supported headless
+    // We don't need to wrap it in JSON, as the module does that for us
+    axios.get(url)
       .then((result) => {
         dispatchStories({
           type: "STORIES_FETCH_SUCCESS",
-          payload: result.hits,
+          payload: result.data.hits,
         });
       })
       .catch(() => {

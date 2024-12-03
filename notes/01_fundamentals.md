@@ -49,3 +49,7 @@
 - Explicit data fetching keeps track of API endpoint URL string in state, only fetching when the button is pressed.
 - Async functions allow you to work with asynchronous code in a more readable and sequential manner, enhancing the handling of promises.
 - Use Promise.all() to handle multiple asynchronous operations concurrently in an async function.
+- Form input is typically managed using state. Each input field has a corresponding state variable, and the value of the input is set to the state.
+- Use the e.preventDefault() method within the form’s submit handler to prevent the default form submission behaviors.
+- Controlled form input is when React state manages the input value. Uncontrolled input is when the DOM handles the input, and React does not track its state.
+- The onSubmit event is triggered when the form is submitted and is where you handle form validation, data processing, or any other actions related to the form submission.

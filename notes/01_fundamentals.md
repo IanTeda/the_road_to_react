@@ -53,3 +53,8 @@
 - Use the e.preventDefault() method within the form’s submit handler to prevent the default form submission behaviors.
 - Controlled form input is when React state manages the input value. Uncontrolled input is when the DOM handles the input, and React does not track its state.
 - The onSubmit event is triggered when the form is submitted and is where you handle form validation, data processing, or any other actions related to the form submission.
+
+## Styling React
+
+- [BEM 101](https://css-tricks.com/bem-101/)
+- The Block, Element, Modifier methodology (commonly referred to as BEM) is a popular naming convention for classes in HTML and CSS. Developed by the team at Yandex, its goal is to help developers better understand the relationship between the HTML and CSS in a given project. 

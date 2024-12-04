@@ -1,6 +1,66 @@
 import * as React from 'react';
 import axios from 'axios';
 
+type Story = {
+  objectID: string;
+  url: string;
+  title: string;
+  author: string;
+  num_comments: number;
+  points: number;
+};
+
+type ItemProps = {
+  item: Story;
+  onRemoveItem: (item: Story) => void;
+};
+
+type ListProps = {
+  list: Story[];
+  onRemoveItem: (item: Story) => void;
+};
+
+type StoriesState = {
+  data: Story[];
+  isLoading: boolean;
+  isError: boolean;
+};
+
+type StoriesFetchInitAction = {
+  type: 'STORIES_FETCH_INIT';
+}
+type StoriesFetchSuccessAction = {
+  type: 'STORIES_FETCH_SUCCESS';
+  payload: Story[];
+}
+type StoriesFetchFailureAction = {
+  type: 'STORIES_FETCH_FAILURE';
+}
+type StoriesRemoveAction = {
+  type: 'REMOVE_STORY';
+  payload: Story;
+}
+type StoriesAction =
+  StoriesFetchInitAction
+  | StoriesFetchSuccessAction
+  | StoriesFetchFailureAction
+  | StoriesRemoveAction;
+
+type SearchFormProps = {
+  searchTerm: string;
+  onSearchInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+};
+
+type InputWithLabelProps = {
+  id: string;
+  value: string;
+  type?: string;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isFocused?: boolean;
+  children: React.ReactNode;
+};
+
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
 const welcome = {
@@ -8,7 +68,10 @@ const welcome = {
   title: 'React',
 };
 
-const storiesReducer = (state, action) => {
+const storiesReducer = (
+  state: StoriesState,
+  action: StoriesAction
+) => {
   switch (action.type) {
     case 'STORIES_FETCH_INIT':
       return {
@@ -46,7 +109,10 @@ const storiesReducer = (state, action) => {
   }
 }
 
-const useStorageState = (key, initialState) => {
+const useStorageState = (
+  key: string,
+  initialState: string
+) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
@@ -55,7 +121,7 @@ const useStorageState = (key, initialState) => {
     localStorage.setItem(key, value);
   }, [value]);
 
-  return [value, setValue]
+  return [value, setValue] as const;
 }
 
 const App = () => {
@@ -97,23 +163,28 @@ const App = () => {
   }, [url]);
 
   React.useEffect(() => {
+    console.log("How many times do I fetch?")
     handleFetchStories();
 
   }, [handleFetchStories]);
 
   // Callback handler
-  const handleRemoveStory = (item) => {
+  const handleRemoveStory = (item: Story) => {
     dispatchStories({
       type: "REMOVE_STORY",
       payload: item
     })
   };
 
-  const handleSearchInput = (event) => {
+  const handleSearchInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchSubmit = (event) => {
+  const handleSearchSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
 
     event.preventDefault();
@@ -123,13 +194,13 @@ const App = () => {
     searchTerm,
     onSearchInput,
     onSearchSubmit
-  }) => (
-    <form onSubmit={handleSearchSubmit}>
+  }: SearchFormProps) => (
+    <form onSubmit={onSearchSubmit}>
       <InputWithLabel
         id="search"
         value={searchTerm}
         isFocused
-        onInputChange={handleSearchInput}
+        onInputChange={onSearchInput}
       >
         <strong>Search  :</strong>
       </InputWithLabel>
@@ -174,10 +245,12 @@ const InputWithLabel = ({
   onInputChange,
   isFocused,
   children
-}) => {
-  const inputRef = React.useRef();
+}: InputWithLabelProps) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
     if (isFocused && inputRef.current) {
       inputRef.current.focus();
     }
@@ -198,7 +271,7 @@ const InputWithLabel = ({
   );
 };
 
-const List = ({ list, onRemoveItem }) => (
+const List = ({ list, onRemoveItem }: ListProps) => (
   <ul>
     {list.map((item) => (
       <Item
@@ -210,7 +283,7 @@ const List = ({ list, onRemoveItem }) => (
   </ul>
 );
 
-const Item = ({ item, onRemoveItem }) => (
+const Item = ({ item, onRemoveItem }: ItemProps) => (
   <li>
     <span>
       <a href="{item.url}">{item.title}</a>

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import { SearchForm } from './SearchForm';
+import { List } from './List';
+
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
 const welcome = {
@@ -57,30 +60,6 @@ const useStorageState = (key, initialState) => {
 
   return [value, setValue]
 }
-
-
-const SearchForm = ({
-  searchTerm,
-  onSearchInput,
-  onSearchSubmit,
-}) => (
-  <form onSubmit={onSearchSubmit}>
-    <InputWithLabel
-      id="search"
-      value={searchTerm}
-      isFocused
-      onInputChange={onSearchInput}
-    >
-      <strong>Search  :</strong>
-    </InputWithLabel>
-
-    <button
-      type='submit'
-      disabled={!searchTerm}>
-      Submit
-    </button>
-  </form>
-)
 
 const App = () => {
 
@@ -168,65 +147,88 @@ const App = () => {
   );
 }
 
-const InputWithLabel = ({
-  id,
-  value,
-  type = "text",
-  onInputChange,
-  isFocused,
-  children
-}) => {
-  const inputRef = React.useRef();
+// const SearchForm = ({
+//   searchTerm,
+//   onSearchInput,
+//   onSearchSubmit,
+// }) => (
+//   <form onSubmit={onSearchSubmit}>
+//     <InputWithLabel
+//       id="search"
+//       value={searchTerm}
+//       isFocused
+//       onInputChange={onSearchInput}
+//     >
+//       <strong>Search  :</strong>
+//     </InputWithLabel>
 
-  React.useEffect(() => {
-    if (isFocused && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isFocused]);
+//     <button
+//       type='submit'
+//       disabled={!searchTerm}>
+//       Submit
+//     </button>
+//   </form>
+// )
 
-  return (
-    <>
-      <label htmlFor={id}>{children}</label>
-      &nbsp;
-      <input
-        ref={inputRef}
-        id={id}
-        type={type}
-        value={value}
-        onChange={onInputChange}
-      />
-    </>
-  );
-};
+// const InputWithLabel = ({
+//   id,
+//   value,
+//   type = "text",
+//   onInputChange,
+//   isFocused,
+//   children
+// }) => {
+//   const inputRef = React.useRef();
 
-const List = ({ list, onRemoveItem }) => (
-  <ul>
-    {list.map((item) => (
-      <Item
-        key={item.objectID}
-        item={item}
-        onRemoveItem={onRemoveItem}
-      />
-    ))}
-  </ul>
-);
+//   React.useEffect(() => {
+//     if (isFocused && inputRef.current) {
+//       inputRef.current.focus();
+//     }
+//   }, [isFocused]);
 
-const Item = ({ item, onRemoveItem }) => (
-  <li>
-    <span>
-      <a href={item.url}>{item.title}</a>
-    </span>
-    <span>{item.author}</span>
-    <span>{item.num_comments}</span>
-    <span>{item.points}</span>
-    <span>
-      <button type="button" onClick={() => onRemoveItem(item)}>
-        Remove
-      </button>
-    </span>
-  </li>
-);
+//   return (
+//     <>
+//       <label htmlFor={id}>{children}</label>
+//       &nbsp;
+//       <input
+//         ref={inputRef}
+//         id={id}
+//         type={type}
+//         value={value}
+//         onChange={onInputChange}
+//       />
+//     </>
+//   );
+// };
+
+// const List = ({ list, onRemoveItem }) => (
+//   <ul>
+//     {list.map((item) => (
+//       <Item
+//         key={item.objectID}
+//         item={item}
+//         onRemoveItem={onRemoveItem}
+//       />
+//     ))}
+//   </ul>
+// );
+
+// const Item = ({ item, onRemoveItem }) => (
+//   <li>
+//     <span>
+//       <a href={item.url}>{item.title}</a>
+//     </span>
+//     <span>{item.author}</span>
+//     <span>{item.num_comments}</span>
+//     <span>{item.points}</span>
+//     <span>
+//       <button type="button" onClick={() => onRemoveItem(item)}>
+//         Remove
+//       </button>
+//     </span>
+//   </li>
+// );
 
 export default App
 
-export { storiesReducer, SearchForm, InputWithLabel, List, Item };
+export { storiesReducer, SearchForm, List };

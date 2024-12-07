@@ -58,6 +58,30 @@ const useStorageState = (key, initialState) => {
   return [value, setValue]
 }
 
+
+const SearchForm = ({
+  searchTerm,
+  onSearchInput,
+  onSearchSubmit,
+}) => (
+  <form onSubmit={onSearchSubmit}>
+    <InputWithLabel
+      id="search"
+      value={searchTerm}
+      isFocused
+      onInputChange={onSearchInput}
+    >
+      <strong>Search  :</strong>
+    </InputWithLabel>
+
+    <button
+      type='submit'
+      disabled={!searchTerm}>
+      Submit
+    </button>
+  </form>
+)
+
 const App = () => {
 
   // Set search term state
@@ -118,29 +142,6 @@ const App = () => {
 
     event.preventDefault();
   };
-
-  const SearchForm = ({
-    searchTerm,
-    onSearchInput,
-    onSearchSubmit
-  }) => (
-    <form onSubmit={handleSearchSubmit}>
-      <InputWithLabel
-        id="search"
-        value={searchTerm}
-        isFocused
-        onInputChange={handleSearchInput}
-      >
-        <strong>Search  :</strong>
-      </InputWithLabel>
-
-      <button
-        type='submit'
-        disabled={!searchTerm}>
-        Submit
-      </button>
-    </form>
-  )
 
   return (
     <div>
@@ -213,7 +214,7 @@ const List = ({ list, onRemoveItem }) => (
 const Item = ({ item, onRemoveItem }) => (
   <li>
     <span>
-      <a href="{item.url}">{item.title}</a>
+      <a href={item.url}>{item.title}</a>
     </span>
     <span>{item.author}</span>
     <span>{item.num_comments}</span>
@@ -227,3 +228,5 @@ const Item = ({ item, onRemoveItem }) => (
 );
 
 export default App
+
+export { storiesReducer, SearchForm, InputWithLabel, List, Item };
